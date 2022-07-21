@@ -37,7 +37,7 @@ options = Options()
 
 from .serializers import NewPersonHeroSerializer, RegisterSerializer, UserSerializer, ContactsUserSerializer, \
     TestPersonSerializer, ContactsGoogleFacebookSerializer, ContactsGoogleFacebookSerializerNew, \
-    NewsSerializer, NewsLoaderSerializer
+    NewsSerializer, NewsLoaderSerializer, GiveNewTokenUserFaceBook
 
 from .models import NewPerson, ContactsUser, ContactsGF, ContactsGFNew, New
 
@@ -508,3 +508,35 @@ def check_bd(request):
         New.objects.create(name_public=om)
     all_news = New.objects.all()
     return render(request, 'person/main.html', {'find_person': find_person, 'get_one': get_one, 'all_news': all_news})
+
+
+class GetTokenFaceBook(generics.GenericAPIView):
+    serializer_class = RegisterSerializer
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request):
+        token = request.data['token']
+        decoded = jwt.decode(token, options={"verify_signature": False})
+        email = decoded['email']
+        password = 'secretId'
+        new_user = {
+            'email': email,
+            'password': password
+        }
+        check_user_in_bd = User.objects.filter(email=email)
+        if not check_user_in_bd:
+            serializer = self.get_serializer(data=new_user)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            return Response({
+                "message": "Пользователь успешно создан",
+                'data': serializer.data
+            })
+        else:
+            user = User.objects.get(email=new_user['email'])
+            serializer = GiveNewTokenUserFaceBook(user)
+            return Response({
+                "message": "User exist already",
+                'data': serializer.data
+            })
+

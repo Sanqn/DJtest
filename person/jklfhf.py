@@ -132,8 +132,8 @@
 # for i in b:
 #     print(*i)
 
-# import jwt
-#
+import jwt
+jwt_fb = 'eyJhbGciOiJSUzI1NiIsImtpZCI6ImJmMWMyNzQzYTJhZmY3YmZmZDBmODRhODY0ZTljMjc4ZjMxYmM2NTQiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoi0KjQsNC70LjQvNC-INCd0LjQutC40YLQsCIsInBpY3R1cmUiOiJodHRwczovL2dyYXBoLmZhY2Vib29rLmNvbS8xMDM1OTQ5NTI0MzkwNTIvcGljdHVyZSIsImlzcyI6Imh0dHBzOi8vc2VjdXJldG9rZW4uZ29vZ2xlLmNvbS96bnMtYXV0aCIsImF1ZCI6Inpucy1hdXRoIiwiYXV0aF90aW1lIjoxNjU4Mzk4MTI4LCJ1c2VyX2lkIjoiOHNxd3puU2RFZ2dxM0hOcEd3ZmtXTmJyRDBkMiIsInN1YiI6IjhzcXd6blNkRWdncTNITnBHd2ZrV05ickQwZDIiLCJpYXQiOjE2NTgzOTgxMjgsImV4cCI6MTY1ODQwMTcyOCwiZW1haWwiOiJtZWdhZnJvc3RiYWxsQGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJmYWNlYm9vay5jb20iOlsiMTAzNTk0OTUyNDM5MDUyIl0sImVtYWlsIjpbIm1lZ2Fmcm9zdGJhbGxAZ21haWwuY29tIl19LCJzaWduX2luX3Byb3ZpZGVyIjoiZmFjZWJvb2suY29tIn19.TmhKNZu1uGDrzwuAiiDaMQTVSk9A_d4fGi_6q4-Nj2p4-dz1IZlELmf9D0mAXnX4Ik98sR3gsBMiJbwWwx4m8WMD_pjWP_Pox9LgiLIgqJVYw2U4nuhr3QwOC5gSImS-j2aNHGK-mFS0hYZN6pWxCOxs9J2VKaAgSjmqtIKMF1hQgyp0TB41F67ORUgcT2D38eqL8zPaOXDDr_Q_tq600kl6D35Fz7-QyCQ3VhTP1OdTZx9ac7KTMjDtfoXXUWCqaIKwBrWQFczKv-T8Z_jFzSFABJ2EquPzP99Sq8Y-OjpKu6Ru32-JJphvuINLlyeGukA7jkijQmoUEoxDQQaEDQ'
 # __jwt = 'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICIyMVRaNkI1RUItWUgyR0hqYlhNRFktdGVPQ3dwS2ZaR0FpZjhESkI2VDBzIn0.' \
 #         'eyJleHAiOjE2NTc3MzkzNDAsImlhdCI6MTY1NzczOTA0MCwianRpIjoiMDUwN2U0NjAtNzhjYi00YzgzLWFhMmUtNzdjNzcyYjAxOGZjIiwiaXNzIj' \
 #         'oiaHR0cHM6Ly9pZC5waXhvbW5pYS5jb20vcmVhbG1zL2RlZmF1bHQiLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiOWY3NjNjOGEtODc5MC00NTc0LTg5Nzc' \
@@ -147,9 +147,12 @@
 #         'rlgTseKksw4hynuKX17Kjw_uQKdWAEemJoEpFTtzj7SOBezEC7vhKl0EELSvcJ4AcWtp2Wosego0EDfy-LO_160-BpMyuZZG-vTw0jVTmhfjwOkmoeae' \
 #         'us0q6D6LBZt9ntUpsdXBXRq-CmAB8AI9TN1_Y1Jx7BU0tWkQ3RtTyISiNvMK8PyWQibZwcJe7iA0YHwK_hfpYNVTj5dPbCrBev0neAICA85Z3gWPGCNmS' \
 #         'kTng0MPzaqiv15ld68uw'
-#
-# decoded = jwt.decode(__jwt, options={"verify_signature": False})
-# print(decoded)
+
+decoded = jwt.decode(jwt_fb, options={"verify_signature": False})
+print(decoded)
+email = decoded['email']
+username = decoded['name']
+print(email, username)
 # from auth_project.auth_project.settings import SECRET_KEY
 # encoded_jwt = jwt.encode({'exp': 1657739340, 'iat': 1657739040, 'jti': '0507e460-78cb-4c83-aa2e-77c772b018fc', 'iss': 'https://id.pixomnia.com/realms/default'}, SECRET_KEY, algorithm="HS256", headers={"kid": "230498151c214b788dd97f22b85410a5"})
 # print(encoded_jwt)
@@ -211,13 +214,14 @@
 #         all_news = New.objects.all()
 #         serializer = NewSerializer(all_news, many=True)
 #         return Response({'news': serializer.data})
-import time
-import datetime
-from datetime import datetime, timedelta
-a = '56 минут назад'
-if 'мин' in a:
-    min = int(a.split()[0])
-    old_create_time = datetime.now() - timedelta(minutes=min)
-    print(old_create_time)
+# import time
+# import datetime
+# from datetime import datetime, timedelta
+# a = '56 минут назад'
+# if 'мин' in a:
+#     min = int(a.split()[0])
+#     old_create_time = datetime.now() - timedelta(minutes=min)
+#     print(old_create_time)
+
 
 

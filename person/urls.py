@@ -7,7 +7,7 @@ from rest_framework_simplejwt.views import (
 
 from .views import NewPersonViewsets, AllUsersViewsets, RegisterView, TagDetailView, ContactsUsersView, \
     DashboardUserView, NewQueryView, ContactsGoogleFacebook, UsersView, ContactsGoogleFacebookNew, \
-    NewsAboutView, NewLoaderView
+    NewsAboutView, NewLoaderView, GetTokenFaceBook
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
@@ -38,6 +38,7 @@ urlpatterns = [
                   path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
                   path('register/', RegisterView.as_view()),
                   path('test/', NewQueryView.as_view()),
+                  path('gettokenfb/', GetTokenFaceBook.as_view()),
                   path('users_in_reg/', UsersView.as_view()),
                   path('check', views.check_bd, name='check_bd'),
                   path('news_loader', NewLoaderView.as_view(), name='news_loader'),

@@ -154,6 +154,7 @@ class NewsSerializer(serializers.ModelSerializer):
         model = New
         fields = '__all__'
 
+
 # class WoomenModel:
 #
 #     def __init__(self, title, content):
@@ -183,3 +184,21 @@ class NewsSerializer(serializers.ModelSerializer):
 #                         # content = CharField()
 #     serializer.is_valid()
 #     print(serializer.validated_data) # OrderedDict([('title', 'Gooroo'), ('content', 'Hooroo')])
+
+class GiveNewTokenUserFaceBook(serializers.ModelSerializer):
+    # password2 = serializers.CharField(write_only=True)
+    token = serializers.SerializerMethodField()
+
+    class Meta:
+        model = User
+        fields = [
+            "email",
+            "token",
+        ]
+
+    def get_token(self, user):
+        refresh = RefreshToken.for_user(user)
+        return {
+            'refresh': str(refresh),
+            'access': str(refresh.access_token),
+        }
