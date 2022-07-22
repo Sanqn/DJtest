@@ -106,27 +106,27 @@ WSGI_APPLICATION = 'auth_project.wsgi.application'
 #         'PORT': '5432'
 #     }
 # }
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'DB1',
-#         'USER': 'postgres',
-#         'PASSWORD': 'root',
-#         'HOST': '127.0.0.1',
-#         'PORT': '5432',
-#     },
-# }
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'ddsdcob9bgai0s',
-        'USER': 'cxykdjoiuitbnk',
-        'PASSWORD': '3a2732e3887fb34b436a8e23280163338bbb879fe0e4a4371dca48d5eae472e1',
-        'HOST': 'ec2-54-152-28-9.compute-1.amazonaws.com',
-        'PORT': '5432'
-    }
+        'NAME': 'DB1',
+        'USER': 'postgres',
+        'PASSWORD': 'root',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
+    },
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'ddsdcob9bgai0s',
+#         'USER': 'cxykdjoiuitbnk',
+#         'PASSWORD': '3a2732e3887fb34b436a8e23280163338bbb879fe0e4a4371dca48d5eae472e1',
+#         'HOST': 'ec2-54-152-28-9.compute-1.amazonaws.com',
+#         'PORT': '5432'
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -292,14 +292,11 @@ CKEDITOR_CONFIGS = {
 
 ###################################
 
+# -----------------# cors---------------------
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8000"
+    'http://localhost:8080',
+    'http://127.0.0.1:8000',
+    'http://localhost:3000',
+    'https://ec84-178-122-241-129.eu.ngrok.io/#',
 ]
-
-CORS_ALLOW_METHODS = [
-    "GET",
-    "OPTIONS",
-    "PATCH",
-    "POST",
-    "PUT",
-]
+# ---------------End cors-------------------
