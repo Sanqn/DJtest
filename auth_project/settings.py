@@ -297,6 +297,6 @@ CORS_ALLOWED_ORIGINS = [
     'http://localhost:8080',
     'http://127.0.0.1:8000',
     'http://localhost:3000',
-    'https://ec84-178-122-241-129.eu.ngrok.io/#',
+    'https://ec84-178-122-241-129.eu.ngrok.io',
 ]
 # ---------------End cors-------------------

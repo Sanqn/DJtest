@@ -1,6 +1,9 @@
+import string
 import time
 import datetime
 from datetime import datetime, timedelta
+import random
+
 import schedule
 from django.contrib.auth import user_logged_in
 from django.contrib.auth.models import User
@@ -514,11 +517,18 @@ class GetTokenFaceBook(generics.GenericAPIView):
     serializer_class = RegisterSerializer
     permission_classes = [permissions.AllowAny]
 
+    def getRandomNumKey(self):
+        num = 9
+        a = string.ascii_letters + string.digits  # Источник данных: a-z, A-Z, 0-9
+        key = random.sample(a, num)
+        keys = "".join(key)
+        return keys
+
     def post(self, request):
         token = request.data['token']
         decoded = jwt.decode(token, options={"verify_signature": False})
         email = decoded['email']
-        password = 'secretId'
+        password = self.getRandomNumKey()
         new_user = {
             'email': email,
             'password': password
@@ -539,4 +549,3 @@ class GetTokenFaceBook(generics.GenericAPIView):
                 "message": "User exist already",
                 'data': serializer.data
             })
-
