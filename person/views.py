@@ -40,9 +40,9 @@ options = Options()
 
 from .serializers import NewPersonHeroSerializer, RegisterSerializer, UserSerializer, ContactsUserSerializer, \
     TestPersonSerializer, ContactsGoogleFacebookSerializer, ContactsGoogleFacebookSerializerNew, \
-    NewsSerializer, NewsLoaderSerializer, GiveNewTokenUserFaceBook
+    NewsSerializer, NewsLoaderSerializer, GiveNewTokenUserFaceBookSerializers, ContactFaceBookSerializers
 
-from .models import NewPerson, ContactsUser, ContactsGF, ContactsGFNew, New
+from .models import NewPerson, ContactsUser, ContactsGF, ContactsGFNew, New, ContactFaceBook
 
 li_seria = ["NewPersonHeroSerializer", "RegisterSerializer", "UserSerializer", "ContactsUserSerializer"]
 
@@ -67,7 +67,7 @@ class NewQueryView(APIView):
         else:  # если нет в models  моделей, подключаемся к БД напрямую
             name_field = {}
             name_table = ''
-            name_fielf_for_found = []
+            name_field_for_found = []
             list_fields_names = []
             for key, val in dic_user.items():
                 if key == 'type':
@@ -76,7 +76,7 @@ class NewQueryView(APIView):
                     if key != 'type':
                         # name_field[key] = name_field.get(key,'VARCHAR(100) UNIQUE')  # формируем и добавляем уникальные поля
                         name_field[key] = name_field.get(key, 'VARCHAR(100)')  # формируем и добавляем уникальные поля
-                        name_fielf_for_found.append(key)
+                        name_field_for_found.append(key)
                         list_fields_names.append(val)  # формируем и добавляем значения ключа
             list_fields_names = tuple(list_fields_names)  # переводим в картеж для отправки в БД
             name_field['date'] = 'timestamp DEFAULT NOW()'
@@ -125,10 +125,10 @@ class NewQueryView(APIView):
                         )
                         cursor.execute(insert_query, users)
                         connection.commit()
-                        name_fielf_for_found_d = ', '.join(name_fielf_for_found)
+                        name_field_for_found_d = ', '.join(name_field_for_found)
                         insert_query_del = (f" DELETE FROM {name_table} WHERE id IN (SELECT id FROM"
                                             f" (SELECT id, ROW_NUMBER() OVER ("
-                                            f" PARTITION BY {name_fielf_for_found_d} ORDER BY  id DESC)"
+                                            f" PARTITION BY {name_field_for_found_d} ORDER BY  id DESC)"
                                             f" AS rn FROM {name_table}) t"
                                             f" WHERE t.rn > 1)")
 
@@ -390,7 +390,8 @@ class ContactsGoogleFacebookNew(APIView):  # GET, POST,
                     contact=contact,
                     type=type
                 )
-            return Response({'new post': ContactsGoogleFacebookSerializerNew(new_post).data})
+                serializer = ContactsGoogleFacebookSerializerNew(new_post)
+                return Response({'new post': serializer.data})
         else:
             return Response({'message': f'user {id_email} does not exist'})
 
@@ -544,8 +545,21 @@ class GetTokenFaceBook(generics.GenericAPIView):
             })
         else:
             user = User.objects.get(email=new_user['email'])
-            serializer = GiveNewTokenUserFaceBook(user)
+            serializer = GiveNewTokenUserFaceBookSerializers(user)
             return Response({
                 "message": "User exist already",
                 'data': serializer.data
             })
+
+
+class ContactFaceBookViews(viewsets.ModelViewSet):
+    queryset = ContactFaceBook.objects.all()
+    serializer_class = ContactFaceBookSerializers
+    permission_classes = [permissions.IsAuthenticated]
+
+    # authentication_classes = (JWTAuthentication,)
+
+    def get_queryset(self):
+        if IsAuthenticated:
+            id_user = User.objects.get(id=self.request.user.id)
+            return ContactFaceBook.objects.filter(iduser=id_user)

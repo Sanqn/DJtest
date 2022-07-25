@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from .models import NewPerson, ContactsUser, TestPerson, ContactsGF, ContactsGFNew, New
+from .models import NewPerson, ContactsUser, TestPerson, ContactsGF, ContactsGFNew, New, ContactFaceBook
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
@@ -136,11 +136,12 @@ class ContactsGoogleFacebookSerializerNew(serializers.ModelSerializer):
             # 'id_email',
             'contact',
             'type'
+            # 'idtor'
 
         ]
 
-    def create(self, validated_data):
-        return ContactsGFNew.objects.create(**validated_data)
+    # def create(self, validated_data):
+    #     return ContactsGFNew.objects.create(**validated_data)
 
 
 class NewsLoaderSerializer(serializers.ModelSerializer):
@@ -185,7 +186,7 @@ class NewsSerializer(serializers.ModelSerializer):
 #     serializer.is_valid()
 #     print(serializer.validated_data) # OrderedDict([('title', 'Gooroo'), ('content', 'Hooroo')])
 
-class GiveNewTokenUserFaceBook(serializers.ModelSerializer):
+class GiveNewTokenUserFaceBookSerializers(serializers.ModelSerializer):
     # password2 = serializers.CharField(write_only=True)
     token = serializers.SerializerMethodField()
 
@@ -202,3 +203,17 @@ class GiveNewTokenUserFaceBook(serializers.ModelSerializer):
             'refresh': str(refresh),
             'access': str(refresh.access_token),
         }
+
+
+class ContactFaceBookSerializers(serializers.ModelSerializer):
+    iduser = serializers.HiddenField(default=serializers.CurrentUserDefault())
+
+    class Meta:
+        model = ContactFaceBook
+        fields = [
+            'first_name',
+            'last_name',
+            'phone',
+            'email',
+            'iduser',
+        ]

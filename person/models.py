@@ -98,6 +98,10 @@ class NewPerson(models.Model):
         return self.first_name
 
 
+def user_directory_path(instance, filename):
+    return 'upload_file/user_{0}/{1}'.format(instance.first_name, filename)
+
+
 class ContactsUser(models.Model):
     first_name = models.CharField(max_length=200)
     last_name = models.CharField(max_length=200, blank=True)
@@ -105,6 +109,9 @@ class ContactsUser(models.Model):
     email = models.EmailField(null=True, blank=True)
     photo = models.ImageField(null=True, blank=True)
     notes = RichTextUploadingField(null=True, blank=True)
+    education = ArrayField(models.CharField(max_length=100), blank=True, null=True)
+    website = ArrayField(models.CharField(max_length=100), blank=True, null=True)
+    upload_file = models.FileField(upload_to=user_directory_path, max_length=200, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     iduserCreator = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -142,6 +149,18 @@ class New(models.Model):
 
     def __str__(self):
         return self.title_post
+
+
+class ContactFaceBook(models.Model):
+    first_name = models.CharField(max_length=200)
+    last_name = models.CharField(max_length=200)
+    phone = PhoneNumberField(unique=True, null=False, blank=False)
+    email = models.EmailField(null=True, blank=True)
+    created_contact = models.DateTimeField(auto_now_add=True)
+    iduser = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.first_name
 
 # class Celebrities(models.Model):
 #     title = models.CharField(max_length=255)

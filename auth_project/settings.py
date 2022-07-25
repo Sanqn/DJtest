@@ -99,16 +99,6 @@ WSGI_APPLICATION = 'auth_project.wsgi.application'
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'GJtest',
-#         'USER': 'postgres',
-#         'PASSWORD': 'root',
-#         'HOST': '127.0.0.1',
-#         'PORT': '5432'
-#     }
-# }
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
 #         'NAME': 'DB1',
 #         'USER': 'postgres',
 #         'PASSWORD': 'root',
@@ -298,5 +288,6 @@ CORS_ALLOWED_ORIGINS = [
     'http://127.0.0.1:8000',
     'http://localhost:3000',
     'https://ec84-178-122-241-129.eu.ngrok.io',
+    'https://da8a-178-122-241-129.eu.ngrok.io',
 ]
 # ---------------End cors-------------------

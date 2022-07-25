@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import NewPerson, User, ContactsUser
+from .models import NewPerson, User, ContactsUser, ContactFaceBook
 
 
 class UserAdmin(admin.ModelAdmin):
@@ -17,3 +17,4 @@ admin.site.register(User, UserAdmin)
 
 admin.site.register(NewPerson)
 admin.site.register(ContactsUser)
+admin.site.register(ContactFaceBook)
