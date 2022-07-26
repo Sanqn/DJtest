@@ -40,9 +40,10 @@ options = Options()
 
 from .serializers import NewPersonHeroSerializer, RegisterSerializer, UserSerializer, ContactsUserSerializer, \
     TestPersonSerializer, ContactsGoogleFacebookSerializer, ContactsGoogleFacebookSerializerNew, \
-    NewsSerializer, NewsLoaderSerializer, GiveNewTokenUserFaceBookSerializers, ContactFaceBookSerializers
+    NewsSerializer, NewsLoaderSerializer, GiveNewTokenUserFaceBookSerializers, ContactFaceBookSerializers, \
+    ContactGoogleSerializers
 
-from .models import NewPerson, ContactsUser, ContactsGF, ContactsGFNew, New, ContactFaceBook
+from .models import NewPerson, ContactsUser, ContactsGF, ContactsGFNew, New, ContactFaceBook, ContactGoogle
 
 li_seria = ["NewPersonHeroSerializer", "RegisterSerializer", "UserSerializer", "ContactsUserSerializer"]
 
@@ -563,3 +564,16 @@ class ContactFaceBookViews(viewsets.ModelViewSet):
         if IsAuthenticated:
             id_user = User.objects.get(id=self.request.user.id)
             return ContactFaceBook.objects.filter(iduser=id_user)
+
+
+class ContactGooglekViews(viewsets.ModelViewSet):
+    queryset = ContactGoogle.objects.all()
+    serializer_class = ContactGoogleSerializers
+    permission_classes = [permissions.IsAuthenticated]
+
+    # authentication_classes = (JWTAuthentication,)
+
+    def get_queryset(self):
+        if IsAuthenticated:
+            id_user = User.objects.get(id=self.request.user.id)
+            return ContactGoogle.objects.filter(iduser=id_user)

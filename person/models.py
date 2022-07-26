@@ -162,6 +162,18 @@ class ContactFaceBook(models.Model):
     def __str__(self):
         return self.first_name
 
+
+class ContactGoogle(models.Model):
+    first_name = models.CharField(max_length=200)
+    last_name = models.CharField(max_length=200)
+    phone = PhoneNumberField(unique=True, null=False, blank=False)
+    email = models.EmailField(null=True, blank=True)
+    created_contact = models.DateTimeField(auto_now_add=True)
+    iduser = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.first_name
+
 # class Celebrities(models.Model):
 #     title = models.CharField(max_length=255)
 #     content = models.TextField(blank=True)

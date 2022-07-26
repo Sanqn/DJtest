@@ -7,7 +7,7 @@ from rest_framework_simplejwt.views import (
 
 from .views import NewPersonViewsets, AllUsersViewsets, RegisterView, TagDetailView, ContactsUsersView, \
     DashboardUserView, NewQueryView, ContactsGoogleFacebook, UsersView, ContactsGoogleFacebookNew, \
-    NewsAboutView, NewLoaderView, GetTokenFaceBook, ContactFaceBookViews
+    NewsAboutView, NewLoaderView, GetTokenFaceBook, ContactFaceBookViews, ContactGooglekViews
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
@@ -22,6 +22,7 @@ router.register('dashboarduser', DashboardUserView, basename='dashboarduser')
 router.register('testfacebook', ContactsGoogleFacebook, basename='testfacebook')
 router.register('news', NewsAboutView, basename='news')
 router.register('newcontactfacebook', ContactFaceBookViews, basename='newcontactfacebook')
+router.register('newcontactgoogle', ContactGooglekViews, basename='newcontactgoogle')
 # router.register('testfacebooknew', ContactsGoogleFacebookNew, basename='testfacebooknew')
 
 
