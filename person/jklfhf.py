@@ -25,12 +25,14 @@ def create_connection(db_name, db_user, db_password, db_host, db_port):
         for x in cursor:
             print(x)
         #Получить результат
-        cursor.execute("SELECT * from person_user")
-        record = cursor.fetchall()
-        for i in record:
-            print("Результат", i)
+        # cursor.execute("SELECT * from django_content_type")
+        # record = cursor.fetchall()
+        # for i in record:
+        #     print("django_content_type", i)
 
-        # cursor.execute("DROP TABLE test8")
+        # cursor.execute("DROP TABLE person_contactfacebook")
+        # connection.commit()
+        # cursor.execute("DELETE FROM django_content_type WHERE id='18'")
         # connection.commit()
 
     except OperationalError as e:
