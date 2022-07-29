@@ -2,8 +2,8 @@ from django.contrib.auth.models import User
 from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from .models import NewPerson, ContactsUser, TestPerson, ContactsGF, ContactsGFNew, New, ContactFaceBook, ContactGoogle, \
-    CalendarUser
+from .models import NewPerson, ContactsUser, TestPerson, ContactsGF, ContactsGFNew, New, ContactFaceBook, \
+    CalendarUser, ContactGoogle1
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
@@ -224,7 +224,7 @@ class ContactGoogleSerializers(serializers.ModelSerializer):
     iduser = serializers.HiddenField(default=serializers.CurrentUserDefault())
 
     class Meta:
-        model = ContactGoogle
+        model = ContactGoogle1
         fields = [
             'first_name',
             'last_name',

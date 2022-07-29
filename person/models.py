@@ -163,7 +163,7 @@ class ContactFaceBook(models.Model):
         return self.first_name
 
 
-class ContactGoogle(models.Model):
+class ContactGoogle1(models.Model):
     first_name = models.CharField(max_length=200)
     last_name = models.CharField(max_length=200)
     phone = PhoneNumberField(unique=True, null=False, blank=False)

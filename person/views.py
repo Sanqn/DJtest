@@ -45,8 +45,8 @@ from .serializers import NewPersonHeroSerializer, RegisterSerializer, UserSerial
     NewsSerializer, NewsLoaderSerializer, GiveNewTokenUserFaceBookSerializers, ContactFaceBookSerializers, \
     ContactGoogleSerializers, CalendarUserSerializers
 
-from .models import NewPerson, ContactsUser, ContactsGF, ContactsGFNew, New, ContactFaceBook, ContactGoogle, \
-    CalendarUser
+from .models import NewPerson, ContactsUser, ContactsGF, ContactsGFNew, New, ContactFaceBook, \
+    CalendarUser, ContactGoogle1
 
 li_seria = ["NewPersonHeroSerializer", "RegisterSerializer", "UserSerializer", "ContactsUserSerializer"]
 
@@ -570,7 +570,7 @@ class ContactFaceBookViews(viewsets.ModelViewSet):
 
 
 class ContactGoogleViews(viewsets.ModelViewSet):
-    queryset = ContactGoogle.objects.all()
+    queryset = ContactGoogle1.objects.all()
     serializer_class = ContactGoogleSerializers
     permission_classes = [permissions.IsAuthenticated]
 
@@ -579,7 +579,7 @@ class ContactGoogleViews(viewsets.ModelViewSet):
     def get_queryset(self):
         if IsAuthenticated:
             id_user = User.objects.get(id=self.request.user.id)
-            return ContactGoogle.objects.filter(iduser=id_user)
+            return ContactGoogle1.objects.filter(iduser=id_user)
 
 
 class CalendarUserViews(viewsets.ModelViewSet):
