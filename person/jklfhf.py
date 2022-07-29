@@ -1,46 +1,46 @@
-# import psycopg2
-# from psycopg2 import OperationalError
-# from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
+import psycopg2
+from psycopg2 import OperationalError
+from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
+
+a = 'testperson'
+
+
+def create_connection(db_name, db_user, db_password, db_host, db_port):
+    connection = None
+    try:
+        connection = psycopg2.connect(
+            database=db_name,
+            user=db_user,
+            password=db_password,
+            host=db_host,
+            port=db_port,
+        )
+        print('Connection to PosrgresQL DB successfull')
+        cursor = connection.cursor()
+        # print(connection.get_dsn_parameters(), "\n")
+        # Выполнение SQL-запроса
+        cursor.execute(
+            "SELECT table_name FROM information_schema.tables WHERE table_schema NOT IN ('information_schema', 'pg_catalog')")
+        # Получить результатn
+        for x in cursor:
+            print(x)
+        #Получить результат
+        cursor.execute("SELECT * from person_user")
+        record = cursor.fetchall()
+        for i in record:
+            print("Результат", i)
+
+        # cursor.execute("DROP TABLE test8")
+        # connection.commit()
+
+    except OperationalError as e:
+        print(f"The error '{e}' occurred")
+    return connection
 #
-# a = 'testperson'
 #
-#
-# def create_connection(db_name, db_user, db_password, db_host, db_port):
-#     connection = None
-#     try:
-#         connection = psycopg2.connect(
-#             database=db_name,
-#             user=db_user,
-#             password=db_password,
-#             host=db_host,
-#             port=db_port,
-#         )
-#         print('Connection to PosrgresQL DB successfull')
-#         cursor = connection.cursor()
-#         # print(connection.get_dsn_parameters(), "\n")
-#         # Выполнение SQL-запроса
-#         cursor.execute(
-#             "SELECT table_name FROM information_schema.tables WHERE table_schema NOT IN ('information_schema', 'pg_catalog')")
-#         # Получить результатn
-#         for x in cursor:
-#             print(x)
-#         #Получить результат
-#         cursor.execute("SELECT * from person_user")
-#         record = cursor.fetchall()
-#         for i in record:
-#             print("Результат", i)
-#
-#         # cursor.execute("DROP TABLE test8")
-#         # connection.commit()
-#
-#     except OperationalError as e:
-#         print(f"The error '{e}' occurred")
-#     return connection
-# #
-# #
-# # # con = create_connection("DB1", "postgres", "root", "127.0.0.1", "5432")
-# con = create_connection("ddsdcob9bgai0s", "cxykdjoiuitbnk", "3a2732e3887fb34b436a8e23280163338bbb879fe0e4a4371dca48d5eae472e1",
-#                         "ec2-54-152-28-9.compute-1.amazonaws.com", "5432")
+# # con = create_connection("DB1", "postgres", "root", "127.0.0.1", "5432")
+con = create_connection("ddsdcob9bgai0s", "cxykdjoiuitbnk", "3a2732e3887fb34b436a8e23280163338bbb879fe0e4a4371dca48d5eae472e1",
+                        "ec2-54-152-28-9.compute-1.amazonaws.com", "5432")
 #
 #
 # def execute_query_users(connection):
@@ -423,3 +423,18 @@
 #
 # with client:
 #     client.loop.run_until_complete(main(list_links))
+# from datetime import datetime
+# a =datetime.strptime('2022-07-05T14:48:00.000Z', '%Y-%m-%dT%H:%M:%S.%f%z')
+# cactom =datetime.strptime('2022-07-27T19:03:42.064846Z', '%Y-%m-%dT%H:%M:%S.%f%z')
+# now = datetime.now()
+# print(a)
+# print(now)
+# print(cactom)
+
+import math
+
+# l = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+# print(list(zip(*[iter(l)] * 3)))
+# a = [1,2,3]
+# b = ['one', 'two', 'tree']
+# print(list(zip(a,b)))

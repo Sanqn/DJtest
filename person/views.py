@@ -3,6 +3,7 @@ import time
 import datetime
 from datetime import datetime, timedelta
 import random
+from rest_framework.decorators import action
 
 import schedule
 from django.contrib.auth import user_logged_in
@@ -24,6 +25,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from taggit.models import Tag
 import psycopg2
 from psycopg2 import OperationalError
+from django.db.models import Q
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -41,9 +43,10 @@ options = Options()
 from .serializers import NewPersonHeroSerializer, RegisterSerializer, UserSerializer, ContactsUserSerializer, \
     TestPersonSerializer, ContactsGoogleFacebookSerializer, ContactsGoogleFacebookSerializerNew, \
     NewsSerializer, NewsLoaderSerializer, GiveNewTokenUserFaceBookSerializers, ContactFaceBookSerializers, \
-    ContactGoogleSerializers
+    ContactGoogleSerializers, CalendarUserSerializers
 
-from .models import NewPerson, ContactsUser, ContactsGF, ContactsGFNew, New, ContactFaceBook, ContactGoogle
+from .models import NewPerson, ContactsUser, ContactsGF, ContactsGFNew, New, ContactFaceBook, ContactGoogle, \
+    CalendarUser
 
 li_seria = ["NewPersonHeroSerializer", "RegisterSerializer", "UserSerializer", "ContactsUserSerializer"]
 
@@ -566,7 +569,7 @@ class ContactFaceBookViews(viewsets.ModelViewSet):
             return ContactFaceBook.objects.filter(iduser=id_user)
 
 
-class ContactGooglekViews(viewsets.ModelViewSet):
+class ContactGoogleViews(viewsets.ModelViewSet):
     queryset = ContactGoogle.objects.all()
     serializer_class = ContactGoogleSerializers
     permission_classes = [permissions.IsAuthenticated]
@@ -577,3 +580,48 @@ class ContactGooglekViews(viewsets.ModelViewSet):
         if IsAuthenticated:
             id_user = User.objects.get(id=self.request.user.id)
             return ContactGoogle.objects.filter(iduser=id_user)
+
+
+class CalendarUserViews(viewsets.ModelViewSet):
+    queryset = CalendarUser.objects.all()
+    serializer_class = CalendarUserSerializers
+    permission_classes = [permissions.IsAuthenticated]
+
+    # authentication_classes = (JWTAuthentication,)
+
+    def get_queryset(self):
+        if IsAuthenticated:
+            id_user = User.objects.get(id=self.request.user.id)
+            return CalendarUser.objects.filter(iduser=id_user)
+
+
+class GetEventCalendarView(generics.GenericAPIView):
+    serializer_class = CalendarUserSerializers
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request):
+        if IsAuthenticated:
+            id_user = User.objects.get(id=self.request.user.id)
+            # id_queryset_user = User.objects.values('id').get(email=id_user)['id']
+            serializer = self.get_serializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            event = request.data['event']
+            date_create_event = request.data['date_create_event']
+            # print(id_queryset_user)
+            if not date_create_event:
+                find_event = CalendarUser.objects.filter(event__icontains=event, iduser=id_user)
+                if find_event:
+                    serializer = CalendarUserSerializers(find_event, many=True)
+                    return Response({'answer': serializer.data})
+            else:
+                find_event = CalendarUser.objects.filter(
+                    Q(event__icontains=event) | Q(date_create_event=date_create_event), iduser=id_user)
+                if find_event:
+                    serializer = CalendarUserSerializers(find_event, many=True)
+                    return Response({'answer': serializer.data})
+            return Response({'answer': 'Nothing found for your request'})
+
+
+
+
+# Response({'user': NewPersonHeroSerializer(users, many=True).data}

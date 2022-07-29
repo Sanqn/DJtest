@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import NewPerson, User, ContactsUser, ContactFaceBook
+from .models import NewPerson, User, ContactsUser, ContactFaceBook, ContactGoogle, CalendarUser
 
 
 class UserAdmin(admin.ModelAdmin):
@@ -18,3 +18,5 @@ admin.site.register(User, UserAdmin)
 admin.site.register(NewPerson)
 admin.site.register(ContactsUser)
 admin.site.register(ContactFaceBook)
+admin.site.register(ContactGoogle)
+admin.site.register(CalendarUser)
