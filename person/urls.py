@@ -8,7 +8,7 @@ from rest_framework_simplejwt.views import (
 from .views import NewPersonViewsets, AllUsersViewsets, RegisterView, TagDetailView, ContactsUsersView, \
     DashboardUserView, NewQueryView, ContactsGoogleFacebook, UsersView, ContactsGoogleFacebookNew, \
     NewsAboutView, NewLoaderView, GetTokenFaceBook, ContactFaceBookViews, ContactGoogleViews, CalendarUserViews, \
-    GetEventCalendarView
+    GetEventCalendarView, CalendarUserEventViews
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
@@ -25,9 +25,8 @@ router.register('news', NewsAboutView, basename='news')
 router.register('newcontactfacebook', ContactFaceBookViews, basename='newcontactfacebook')
 router.register('newcontactgoogle', ContactGoogleViews, basename='newcontactgoogle')
 router.register('calendar', CalendarUserViews, basename='calendar')
+router.register('event', CalendarUserEventViews, basename='event')
 # router.register('testfacebooknew', ContactsGoogleFacebookNew, basename='testfacebooknew')
-
-
 
 
 urlpatterns = [

@@ -1,48 +1,48 @@
-import psycopg2
-from psycopg2 import OperationalError
-from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
-
-a = 'testperson'
-
-
-def create_connection(db_name, db_user, db_password, db_host, db_port):
-    connection = None
-    try:
-        connection = psycopg2.connect(
-            database=db_name,
-            user=db_user,
-            password=db_password,
-            host=db_host,
-            port=db_port,
-        )
-        print('Connection to PosrgresQL DB successfull')
-        cursor = connection.cursor()
-        # print(connection.get_dsn_parameters(), "\n")
-        # Выполнение SQL-запроса
-        cursor.execute(
-            "SELECT table_name FROM information_schema.tables WHERE table_schema NOT IN ('information_schema', 'pg_catalog')")
-        # Получить результатn
-        for x in cursor:
-            print(x)
-        #Получить результат
-        # cursor.execute("SELECT * from django_content_type")
-        # record = cursor.fetchall()
-        # for i in record:
-        #     print("django_content_type", i)
-
-        # cursor.execute("DROP TABLE person_contactfacebook")
-        # connection.commit()
-        # cursor.execute("DELETE FROM django_content_type WHERE id='18'")
-        # connection.commit()
-
-    except OperationalError as e:
-        print(f"The error '{e}' occurred")
-    return connection
+# import psycopg2
+# from psycopg2 import OperationalError
+# from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
+#
+# a = 'testperson'
 #
 #
-# # con = create_connection("DB1", "postgres", "root", "127.0.0.1", "5432")
-con = create_connection("ddsdcob9bgai0s", "cxykdjoiuitbnk", "3a2732e3887fb34b436a8e23280163338bbb879fe0e4a4371dca48d5eae472e1",
-                        "ec2-54-152-28-9.compute-1.amazonaws.com", "5432")
+# def create_connection(db_name, db_user, db_password, db_host, db_port):
+#     connection = None
+#     try:
+#         connection = psycopg2.connect(
+#             database=db_name,
+#             user=db_user,
+#             password=db_password,
+#             host=db_host,
+#             port=db_port,
+#         )
+#         print('Connection to PosrgresQL DB successfull')
+#         cursor = connection.cursor()
+#         # print(connection.get_dsn_parameters(), "\n")
+#         # Выполнение SQL-запроса
+#         cursor.execute(
+#             "SELECT table_name FROM information_schema.tables WHERE table_schema NOT IN ('information_schema', 'pg_catalog')")
+#         # Получить результатn
+#         for x in cursor:
+#             print(x)
+#         #Получить результат
+#         # cursor.execute("SELECT * from django_content_type")
+#         # record = cursor.fetchall()
+#         # for i in record:
+#         #     print("django_content_type", i)
+#
+#         # cursor.execute("DROP TABLE person_contactfacebook")
+#         # connection.commit()
+#         # cursor.execute("DELETE FROM django_content_type WHERE id='18'")
+#         # connection.commit()
+#
+#     except OperationalError as e:
+#         print(f"The error '{e}' occurred")
+#     return connection
+# #
+# #
+# # # con = create_connection("DB1", "postgres", "root", "127.0.0.1", "5432")
+# con = create_connection("ddsdcob9bgai0s", "cxykdjoiuitbnk", "3a2732e3887fb34b436a8e23280163338bbb879fe0e4a4371dca48d5eae472e1",
+#                         "ec2-54-152-28-9.compute-1.amazonaws.com", "5432")
 #
 #
 # def execute_query_users(connection):
@@ -250,7 +250,8 @@ con = create_connection("ddsdcob9bgai0s", "cxykdjoiuitbnk", "3a2732e3887fb34b436
 #     sleep(3)
 #     soup = BeautifulSoup(r.text, 'lxml')
 #     list_movies = soup.findAll('article', class_='short')
-#
+#     print(list_movies)
+
 #     for i in list_movies:
 #         name_movie = i.find('h2').find('a').text.split()[0]
 #         article_movie = i.find('div', class_='kukuruk-text').find('div', class_='kukret-desc').text
@@ -433,10 +434,27 @@ con = create_connection("ddsdcob9bgai0s", "cxykdjoiuitbnk", "3a2732e3887fb34b436
 # print(now)
 # print(cactom)
 
-import math
+# import math
+#
+# # l = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+# # print(list(zip(*[iter(l)] * 3)))
+# # a = [1,2,3]
+# # b = ['one', 'two', 'tree']
+# # print(list(zip(a,b)))
+#
+# import re
+#
+# a = 'когда я шел backenf, бекенд  frodo шли гулять, backend по Devops и девоп'
+# backend = r'b[a,e][c,s]k\w*en[f,d]|б[е,э]к\w*[е,э]д'
+# sear = re.findall(backend, a)
+# print(sear)
+#
+# test = 'аааБББввв'
+# pars = r'[А-Я]\w*[А-Я]'
+# print(re.search(pars, test))
 
-# l = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-# print(list(zip(*[iter(l)] * 3)))
-# a = [1,2,3]
-# b = ['one', 'two', 'tree']
-# print(list(zip(a,b)))
+import jwt
+
+token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjYwMDU0MzE1LCJqdGkiOiI1NTY1NmVmYTM1ZTk0MzkyODdhODE3MDhhNWYwNzU1OCIsInVzZXJfaWQiOjF9.2tZWpptNIqGln7G1NyBPc5sCMc_k1AnlRjxmPSgi_Cs"
+decoded = jwt.decode(token, options={"verify_signature": False})
+print(decoded)

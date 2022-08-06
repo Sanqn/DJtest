@@ -184,3 +184,26 @@ class CalendarUser(models.Model):
     def __str__(self):
         return self.event[:20]
 
+
+class Event(models.Model):
+    title_event = models.CharField(max_length=200)
+    description = models.TextField()
+    start_time_event_bd = models.DateTimeField()
+    end_time_event = models.DateTimeField(blank=True, null=True)
+    date_create = models.DateTimeField(auto_now_add=True)
+    id_user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.title_event
+
+
+class Event(models.Model):
+    title_event = models.CharField(max_length=200)
+    description = models.TextField()
+    start_time_event_bd = models.DateTimeField()
+    end_time_event = models.DateTimeField(blank=True, null=True)
+    date_create = models.DateTimeField(auto_now_add=True)
+    id_user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.title_event

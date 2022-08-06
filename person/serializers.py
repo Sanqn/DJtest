@@ -3,7 +3,7 @@ from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from .models import NewPerson, ContactsUser, TestPerson, ContactsGF, ContactsGFNew, New, ContactFaceBook, \
-    CalendarUser, ContactGoogle1
+    CalendarUser, ContactGoogle1, Event
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
@@ -243,4 +243,18 @@ class CalendarUserSerializers(serializers.ModelSerializer):
             'event',
             'date_create_event',
             'iduser'
+        ]
+
+
+class CalendarUserEventSerializers(serializers.ModelSerializer):
+    id_user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+
+    class Meta:
+        model = Event
+        fields = [
+            'title_event',
+            'description',
+            'start_time_event_bd',
+            'end_time_event',
+            'id_user'
         ]

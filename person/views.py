@@ -43,10 +43,10 @@ options = Options()
 from .serializers import NewPersonHeroSerializer, RegisterSerializer, UserSerializer, ContactsUserSerializer, \
     TestPersonSerializer, ContactsGoogleFacebookSerializer, ContactsGoogleFacebookSerializerNew, \
     NewsSerializer, NewsLoaderSerializer, GiveNewTokenUserFaceBookSerializers, ContactFaceBookSerializers, \
-    ContactGoogleSerializers, CalendarUserSerializers
+    ContactGoogleSerializers, CalendarUserSerializers, CalendarUserEventSerializers
 
 from .models import NewPerson, ContactsUser, ContactsGF, ContactsGFNew, New, ContactFaceBook, \
-    CalendarUser, ContactGoogle1
+    CalendarUser, ContactGoogle1, Event
 
 li_seria = ["NewPersonHeroSerializer", "RegisterSerializer", "UserSerializer", "ContactsUserSerializer"]
 
@@ -444,16 +444,20 @@ class NewLoaderView(APIView):
 
             def create_post(time_create_post, title_post, dick_post):
                 min_post = min(len(time_create_post), len(title_post), len(dick_post))
+
                 for i in range(min_post):
                     time_cr = time_create_post[i].text
                     old_create_time = ''
+
                     for k, v in data_time.items():
+
                         if 'мин' in time_cr:
                             minute = int(time_cr.split()[0])
                             old_create_time = datetime.now() - timedelta(minutes=minute)
                         else:
                             if k == time_cr:
                                 old_create_time = datetime.now() - timedelta(minutes=v)
+
                     t_post = title_post[i].text
                     cont_post = dick_post[i].text
                     cont_post = (cont_post.split('\n\n'))[1:-1]
@@ -621,7 +625,16 @@ class GetEventCalendarView(generics.GenericAPIView):
                     return Response({'answer': serializer.data})
             return Response({'answer': 'Nothing found for your request'})
 
-
-
-
 # Response({'user': NewPersonHeroSerializer(users, many=True).data}
+
+class CalendarUserEventViews(viewsets.ModelViewSet):
+    queryset = Event.objects.all()
+    serializer_class = CalendarUserEventSerializers
+    permission_classes = [permissions.IsAuthenticated]
+
+    # authentication_classes = (JWTAuthentication,)
+
+    def get_queryset(self):
+        if IsAuthenticated:
+            id_user = User.objects.get(id=self.request.user.id)
+            return CalendarUser.objects.filter(iduser=id_user)

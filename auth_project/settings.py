@@ -289,5 +289,6 @@ CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
     'https://ec84-178-122-241-129.eu.ngrok.io',
     'https://da8a-178-122-241-129.eu.ngrok.io',
+    'https://zns-pq3q5dng5-zheniagnedchik.vercel.app',
 ]
 # ---------------End cors-------------------
