@@ -527,13 +527,25 @@ class GetGoogleTokenView(generics.GenericAPIView):
     permission_classes = [permissions.AllowAny]
     serializer_class = RegisterSerializer
 
+    def getRandomNumKey(self):
+        num = 9
+        a = string.ascii_letters + string.digits  # Источник данных: a-z, A-Z, 0-9
+        key = random.sample(a, num)
+        keys = "".join(key)
+        return keys
+
     def post(self, request, *args, **kwargs):
 
         token = request.data["token"]
         decoded = jwt.decode(token, options={"verify_signature": False})
-        username = decoded['name']
         email = decoded['email']
-        password = decoded['sid']
+        username = decoded['name']
+
+        try:
+            password = decoded['sid']
+        except Exception:
+            password = self.getRandomNumKey()
+
         new_user = {
             'username': username,
             'email': email,
