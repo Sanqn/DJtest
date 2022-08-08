@@ -8,7 +8,7 @@ from rest_framework_simplejwt.views import (
 from .views import NewPersonViewsets, AllUsersViewsets, RegisterView, TagDetailView, ContactsUsersView, \
     DashboardUserView, NewQueryView, ContactsGoogleFacebook, UsersView, ContactsGoogleFacebookNew, \
     NewsAboutView, NewLoaderView, GetTokenFaceBook, ContactFaceBookViews, ContactGoogleViews, CalendarUserViews, \
-    GetEventCalendarView, CalendarUserEventViews
+    GetEventCalendarView, CalendarUserEventViews, GetGoogleTokenView
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
