@@ -564,8 +564,7 @@ class ContactFaceBookViews(viewsets.ModelViewSet):
     queryset = ContactFaceBook.objects.all()
     serializer_class = ContactFaceBookSerializers
     permission_classes = [permissions.IsAuthenticated]
-
-    # authentication_classes = (JWTAuthentication,)
+    authentication_classes = (JWTAuthentication,)
 
     def get_queryset(self):
         if IsAuthenticated:
