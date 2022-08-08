@@ -522,6 +522,49 @@ def check_bd(request):
     return render(request, 'person/main.html', {'find_person': find_person, 'get_one': get_one, 'all_news': all_news})
 
 
+# ------- issue token for user from google -----------------
+class GetGoogleTokenView(generics.GenericAPIView):
+    permission_classes = [permissions.AllowAny]
+    serializer_class = RegisterSerializer
+
+    def post(self, request, *args, **kwargs):
+
+        token = request.data["token"]
+        decoded = jwt.decode(token, options={"verify_signature": False})
+        username = decoded['name']
+        email = decoded['email']
+        password = decoded['sid']
+        new_user = {
+            'username': username,
+            'email': email,
+            'password': password
+        }
+
+        user = User.objects.filter(email=new_user['email'])
+
+        if not user:
+
+            serializer = self.get_serializer(data=new_user)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+
+            return Response({
+                "message": "Пользователь успешно создан",
+                'data': serializer.data
+            })
+
+        else:
+
+            user = User.objects.get(email=new_user['email'])
+
+            return Response(
+                {
+                    'message': 'User exists already, use an pair token below',
+                    'data': GiveNewTokenUserFaceBookSerializers(user).data
+                }
+            )
+
+
 class GetTokenFaceBook(generics.GenericAPIView):
     serializer_class = RegisterSerializer
     permission_classes = [permissions.AllowAny]
@@ -622,6 +665,7 @@ class GetEventCalendarView(generics.GenericAPIView):
                     serializer = CalendarUserSerializers(find_event, many=True)
                     return Response({'answer': serializer.data})
             return Response({'answer': 'Nothing found for your request'})
+
 
 # Response({'user': NewPersonHeroSerializer(users, many=True).data}
 

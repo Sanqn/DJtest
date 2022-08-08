@@ -41,6 +41,7 @@ urlpatterns = [
                   path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
                   path('register/', RegisterView.as_view()),
                   path('test/', NewQueryView.as_view()),
+                  path('gtoken/', GetGoogleTokenView.as_view()),  # обработать google token
                   path('gettokenfb/', GetTokenFaceBook.as_view()),
                   path('users_in_reg/', UsersView.as_view()),
                   path('check', views.check_bd, name='check_bd'),
