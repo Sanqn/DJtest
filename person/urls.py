@@ -8,7 +8,7 @@ from rest_framework_simplejwt.views import (
 from .views import NewPersonViewsets, AllUsersViewsets, RegisterView, TagDetailView, ContactsUsersView, \
     DashboardUserView, NewQueryView, ContactsGoogleFacebook, UsersView, ContactsGoogleFacebookNew, \
     NewsAboutView, NewLoaderView, GetTokenFaceBook, ContactFaceBookViews, ContactGoogleViews, CalendarUserViews, \
-    GetEventCalendarView, CalendarUserEventViews, GetGoogleTokenView
+    GetEventCalendarView, CalendarUserEventViews, GetGoogleTokenView, ContactUserTestGoogle
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
@@ -46,6 +46,8 @@ urlpatterns = [
                   path('users_in_reg/', UsersView.as_view()),
                   path('check', views.check_bd, name='check_bd'),
                   path('news_loader', NewLoaderView.as_view(), name='news_loader'),
+                  path('newscontactgoogle', ContactUserTestGoogle.as_view(), name='newscontactgoogle'),
+                  path('newscontactgoogle/<int:pk>', ContactUserTestGoogle.as_view(), name='newscontactgoogle'),
                   path('getcalendarevent', GetEventCalendarView.as_view(), name='getcalendarevent'),
                   path('testfacebooknew/', ContactsGoogleFacebookNew.as_view()),
                   path("ckeditor/", include('ckeditor_uploader.urls')),

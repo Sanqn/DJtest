@@ -234,6 +234,8 @@ class ContactGoogleSerializers(serializers.ModelSerializer):
         ]
 
 
+
+
 class CalendarUserSerializers(serializers.ModelSerializer):
     iduser = serializers.HiddenField(default=serializers.CurrentUserDefault())
 
