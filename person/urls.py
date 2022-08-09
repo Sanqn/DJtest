@@ -46,7 +46,7 @@ urlpatterns = [
                   path('users_in_reg/', UsersView.as_view()),
                   path('check', views.check_bd, name='check_bd'),
                   path('news_loader', NewLoaderView.as_view(), name='news_loader'),
-                  path('newscontactgoogle', ContactUserTestGoogle.as_view(), name='newscontactgoogle'),
+                  path('newscontactgoogle1', ContactUserTestGoogle.as_view(), name='newscontactgoogle1'),
                   path('newscontactgoogle/<int:pk>', ContactUserTestGoogle.as_view(), name='newscontactgoogle'),
                   path('getcalendarevent', GetEventCalendarView.as_view(), name='getcalendarevent'),
                   path('testfacebooknew/', ContactsGoogleFacebookNew.as_view()),

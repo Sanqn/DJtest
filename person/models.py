@@ -166,7 +166,7 @@ class ContactFaceBook(models.Model):
 class ContactGoogle1(models.Model):
     first_name = models.CharField(max_length=200)
     last_name = models.CharField(max_length=200)
-    phone = PhoneNumberField(unique=True, null=False, blank=False)
+    phone = models.CharField(max_length=16)
     email = models.EmailField(null=True, blank=True)
     photo = models.ImageField(null=True, blank=True)
     location = ArrayField(models.CharField(max_length=100), blank=True, null=True)
