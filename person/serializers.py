@@ -230,6 +230,9 @@ class ContactGoogleSerializers(serializers.ModelSerializer):
             'last_name',
             'phone',
             'email',
+            'photo',
+            'location',
+            'event_birthday',
             'iduser',
         ]
 
