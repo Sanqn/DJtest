@@ -452,4 +452,7 @@
 # test = 'аааБББввв'
 # pars = r'[А-Я]\w*[А-Я]'
 # print(re.search(pars, test))
+from collections import OrderedDict
 
+a = OrderedDict([('first_name', 'ada253'), ('last_name', 'awdawd333'), ('phone', '+375291500000'), ('email', 'awdagrg3rw4d@gmail.com'), ('photo', None), ('location', None), ('event_birthday', None)])
+print(a['first_name'])

@@ -652,22 +652,36 @@ class ContactGoogleViews(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         if IsAuthenticated:
             serializer = self.get_serializer(data=request.data, many=True)
-            serializer.is_valid(raise_exception=True)
-            first_name = request.data['first_name']
-            last_name = request.data['last_name']
-            phone = request.data['phone']
-            email = request.data['email']
-            check_user_event = CalendarUser.objects.filter(first_name=first_name, last_name=last_name,
-                                                           phone=phone, email=email)
-            if check_user_event:
-                return Response({'message': 'This contact exist'})
-            else:
-                serializer.save()
-                # return Response({'answer': serializer.data})
-                headers = self.get_success_headers(serializer.data)
-                return Response(serializer.data, status=status.HTTP_200_OK,
-                                headers=headers)
+            serializer.is_valid()
+            roooooot = serializer.data
+            for i in roooooot:
+                print(i)
+                first_name = i['first_name']
+                last_name = i['last_name']
+                phone = i['phone']
+                email = i['email']
+                photo = i['photo']
+                location = i['location']
+                event_birthday = i['event_birthday']
 
+                check_user_event = ContactGoogle1.objects.filter(first_name=first_name, last_name=last_name,
+                                                                 phone=phone, email=email)
+                if check_user_event:
+                    print('This contact exist')
+                else:
+                    new_user = {
+                        'first_name': first_name,
+                        'last_name': last_name,
+                        'phone': phone,
+                        'email': email,
+                        'photo': photo,
+                        'location': location,
+                        'event_birthday': event_birthday
+                    }
+                    serializer = self.get_serializer(data=new_user)
+                    serializer.is_valid(raise_exception=True)
+                    serializer.save()
+            return Response({'answer': serializer.data})
 
 
 
@@ -705,14 +719,13 @@ class CalendarUserViews(viewsets.ModelViewSet):
             serializer.is_valid(raise_exception=True)
             event = request.data['event']
             date_create_event = request.data['date_create_event']
-            check_user_event = CalendarUser.objects.filter(event=event, date_create_event=date_create_event, iduser=id_user)
+            check_user_event = CalendarUser.objects.filter(event=event, date_create_event=date_create_event,
+                                                           iduser=id_user)
             if check_user_event:
                 return Response({'message': 'This event exist'})
             else:
                 serializer.save()
                 return Response({'answer': serializer.data})
-
-
 
 
 class GetEventCalendarView(generics.GenericAPIView):
