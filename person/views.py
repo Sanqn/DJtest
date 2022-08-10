@@ -651,7 +651,6 @@ class ContactGoogleViews(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         if IsAuthenticated:
-            id_user = User.objects.get(id=self.request.user.id)
             serializer = self.get_serializer(data=request.data, many=True)
             if serializer.is_valid():
                 serializer.is_valid(raise_exception=True)
@@ -660,7 +659,7 @@ class ContactGoogleViews(viewsets.ModelViewSet):
                 phone = request.data['phone']
                 email = request.data['email']
                 check_user_event = CalendarUser.objects.filter(first_name=first_name, last_name=last_name,
-                                                               phone=phone, email=email, iduser=id_user)
+                                                               phone=phone, email=email)
                 if check_user_event:
                     return Response({'message': 'This contact exist'})
                 else:
