@@ -651,12 +651,24 @@ class ContactGoogleViews(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         if IsAuthenticated:
+            id_user = User.objects.get(id=self.request.user.id)
             serializer = self.get_serializer(data=request.data, many=True)
             if serializer.is_valid():
-                serializer.save()
-                headers = self.get_success_headers(serializer.data)
-                return Response(serializer.data, status=status.HTTP_201_CREATED,
-                                headers=headers)
+                serializer.is_valid(raise_exception=True)
+                first_name = request.data['first_name']
+                last_name = request.data['last_name']
+                phone = request.data['phone']
+                email = request.data['email']
+                check_user_event = CalendarUser.objects.filter(first_name=first_name, last_name=last_name,
+                                                               phone=phone, email=email, iduser=id_user)
+                if check_user_event:
+                    return Response({'message': 'This contact exist'})
+                else:
+                    serializer.save()
+                    # return Response({'answer': serializer.data})
+                    headers = self.get_success_headers(serializer.data)
+                    return Response(serializer.data, status=status.HTTP_200_OK,
+                                    headers=headers)
 
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -687,6 +699,22 @@ class CalendarUserViews(viewsets.ModelViewSet):
         if IsAuthenticated:
             id_user = User.objects.get(id=self.request.user.id)
             return CalendarUser.objects.filter(iduser=id_user)
+
+    def create(self, request, *args, **kwargs):
+        if IsAuthenticated:
+            id_user = User.objects.get(id=self.request.user.id)
+            serializer = self.get_serializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            event = request.data['event']
+            date_create_event = request.data['date_create_event']
+            check_user_event = CalendarUser.objects.filter(event=event, date_create_event=date_create_event, iduser=id_user)
+            if check_user_event:
+                return Response({'message': 'This event exist'})
+            else:
+                serializer.save()
+                return Response({'answer': serializer.data})
+
+
 
 
 class GetEventCalendarView(generics.GenericAPIView):

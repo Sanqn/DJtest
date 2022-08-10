@@ -19,7 +19,7 @@ admin.site.register(NewPerson)
 admin.site.register(ContactsUser)
 admin.site.register(ContactFaceBook)
 admin.site.register(ContactGoogle1)
-admin.site.register(CalendarUser)
+# admin.site.register(CalendarUser)
 
 
 # class EventAdmin(admin.ModelAdmin):
