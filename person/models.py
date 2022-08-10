@@ -168,7 +168,7 @@ class ContactGoogle1(models.Model):
     last_name = models.CharField(max_length=200)
     phone = models.CharField(max_length=16)
     email = models.EmailField(null=True, blank=True)
-    photo = models.ImageField(null=True, blank=True)
+    photo = models.CharField(max_length=250)
     location = ArrayField(models.CharField(max_length=100), blank=True, null=True)
     event_birthday = ArrayField(models.CharField(max_length=80), blank=True, null=True)
     created_contact = models.DateTimeField(auto_now_add=True)

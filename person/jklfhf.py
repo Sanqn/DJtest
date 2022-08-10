@@ -453,8 +453,3 @@
 # pars = r'[А-Я]\w*[А-Я]'
 # print(re.search(pars, test))
 
-import jwt
-
-token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjYwMDU0MzE1LCJqdGkiOiI1NTY1NmVmYTM1ZTk0MzkyODdhODE3MDhhNWYwNzU1OCIsInVzZXJfaWQiOjF9.2tZWpptNIqGln7G1NyBPc5sCMc_k1AnlRjxmPSgi_Cs"
-decoded = jwt.decode(token, options={"verify_signature": False})
-print(decoded)
