@@ -164,11 +164,11 @@ class ContactFaceBook(models.Model):
 
 
 class ContactGoogle1(models.Model):
-    first_name = models.CharField(max_length=200)
-    last_name = models.CharField(max_length=200)
-    phone = models.CharField(max_length=16)
+    first_name = models.CharField(max_length=200, null=True, blank=True)
+    last_name = models.CharField(max_length=200, null=True, blank=True)
+    phone = models.CharField(max_length=16, null=True, blank=True)
     email = models.EmailField(null=True, blank=True)
-    photo = models.CharField(max_length=250)
+    photo = models.CharField(max_length=250, null=True, blank=True)
     location = ArrayField(models.CharField(max_length=100), blank=True, null=True)
     event_birthday = ArrayField(models.CharField(max_length=80), blank=True, null=True)
     created_contact = models.DateTimeField(auto_now_add=True)

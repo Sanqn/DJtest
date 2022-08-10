@@ -652,24 +652,23 @@ class ContactGoogleViews(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         if IsAuthenticated:
             serializer = self.get_serializer(data=request.data, many=True)
-            if serializer.is_valid():
-                serializer.is_valid(raise_exception=True)
-                first_name = request.data['first_name']
-                last_name = request.data['last_name']
-                phone = request.data['phone']
-                email = request.data['email']
-                check_user_event = CalendarUser.objects.filter(first_name=first_name, last_name=last_name,
-                                                               phone=phone, email=email)
-                if check_user_event:
-                    return Response({'message': 'This contact exist'})
-                else:
-                    serializer.save()
-                    # return Response({'answer': serializer.data})
-                    headers = self.get_success_headers(serializer.data)
-                    return Response(serializer.data, status=status.HTTP_200_OK,
-                                    headers=headers)
+            serializer.is_valid(raise_exception=True)
+            first_name = request.data['first_name']
+            last_name = request.data['last_name']
+            phone = request.data['phone']
+            email = request.data['email']
+            check_user_event = CalendarUser.objects.filter(first_name=first_name, last_name=last_name,
+                                                           phone=phone, email=email)
+            if check_user_event:
+                return Response({'message': 'This contact exist'})
+            else:
+                serializer.save()
+                # return Response({'answer': serializer.data})
+                headers = self.get_success_headers(serializer.data)
+                return Response(serializer.data, status=status.HTTP_200_OK,
+                                headers=headers)
 
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 
 class ContactUserTestGoogle(generics.ListCreateAPIView):
