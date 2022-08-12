@@ -663,6 +663,8 @@ class ContactGoogleViews(viewsets.ModelViewSet):
                 photo = i['photo']
                 location = i['location']
                 event_birthday = i['event_birthday']
+                work = i['work']
+                profession = i['profession']
 
                 check_user_event = ContactGoogle1.objects.filter(first_name=first_name, last_name=last_name,
                                                                  phone=phone, email=email)
@@ -676,7 +678,9 @@ class ContactGoogleViews(viewsets.ModelViewSet):
                         'email': email,
                         'photo': photo,
                         'location': location,
-                        'event_birthday': event_birthday
+                        'event_birthday': event_birthday,
+                        'work': work,
+                        'profession': profession,
                     }
                     serializer = self.get_serializer(data=new_user)
                     serializer.is_valid(raise_exception=True)
