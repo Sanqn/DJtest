@@ -233,6 +233,8 @@ class ContactGoogleSerializers(serializers.ModelSerializer):
             'photo',
             'location',
             'event_birthday',
+            'work',
+            'profession',
             'iduser',
         ]
 
