@@ -290,6 +290,6 @@ CORS_ALLOWED_ORIGINS = [
     'https://ec84-178-122-241-129.eu.ngrok.io',
     'https://da8a-178-122-241-129.eu.ngrok.io',
     'https://zns-pq3q5dng5-zheniagnedchik.vercel.app'
-    'https://zns.vercel.app/'
+    'https://zns.vercel.app'
 ]
 # ---------------End cors-------------------
