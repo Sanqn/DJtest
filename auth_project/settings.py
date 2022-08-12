@@ -54,8 +54,8 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -289,7 +289,8 @@ CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
     'https://ec84-178-122-241-129.eu.ngrok.io',
     'https://da8a-178-122-241-129.eu.ngrok.io',
-    'https://zns-pq3q5dng5-zheniagnedchik.vercel.app'
-    'https://zns.vercel.app'
+    'https://zns-pq3q5dng5-zheniagnedchik.vercel.app',
+    'https://zns.vercel.app',
+    'https://znszns-26957.web.app'
 ]
 # ---------------End cors-------------------
