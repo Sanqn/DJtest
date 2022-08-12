@@ -250,6 +250,16 @@ class CalendarUserSerializers(serializers.ModelSerializer):
             'iduser'
         ]
 
+class ReturnCalendarEventSerializers(serializers.ModelSerializer):
+    iduser = serializers.HiddenField(default=serializers.CurrentUserDefault())
+
+    class Meta:
+        model = CalendarUser
+        fields = [
+            'date_create_event',
+            'iduser'
+        ]
+
 
 class CalendarUserEventSerializers(serializers.ModelSerializer):
     id_user = serializers.HiddenField(default=serializers.CurrentUserDefault())

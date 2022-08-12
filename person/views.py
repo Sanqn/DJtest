@@ -4,6 +4,7 @@ import datetime
 from datetime import datetime, timedelta
 import random
 from rest_framework.decorators import action
+from .calendar1 import calend_mounth
 
 import schedule
 from django.contrib.auth import user_logged_in
@@ -43,7 +44,7 @@ options = Options()
 from .serializers import NewPersonHeroSerializer, RegisterSerializer, UserSerializer, ContactsUserSerializer, \
     TestPersonSerializer, ContactsGoogleFacebookSerializer, ContactsGoogleFacebookSerializerNew, \
     NewsSerializer, NewsLoaderSerializer, GiveNewTokenUserFaceBookSerializers, ContactFaceBookSerializers, \
-    ContactGoogleSerializers, CalendarUserSerializers, CalendarUserEventSerializers
+    ContactGoogleSerializers, CalendarUserSerializers, CalendarUserEventSerializers, ReturnCalendarEventSerializers
 
 from .models import NewPerson, ContactsUser, ContactsGF, ContactsGFNew, New, ContactFaceBook, \
     CalendarUser, ContactGoogle1, Event
@@ -653,9 +654,8 @@ class ContactGoogleViews(viewsets.ModelViewSet):
         if IsAuthenticated:
             serializer = self.get_serializer(data=request.data, many=True)
             serializer.is_valid()
-            roooooot = serializer.data
-            for i in roooooot:
-                print(i)
+            ord_dict_user = serializer.data
+            for i in ord_dict_user:
                 first_name = i['first_name']
                 last_name = i['last_name']
                 phone = i['phone']
@@ -682,7 +682,6 @@ class ContactGoogleViews(viewsets.ModelViewSet):
                     serializer.is_valid(raise_exception=True)
                     serializer.save()
             return Response({'answer': serializer.data})
-
 
 
 class ContactUserTestGoogle(generics.ListCreateAPIView):
@@ -768,3 +767,32 @@ class CalendarUserEventViews(viewsets.ModelViewSet):
         if IsAuthenticated:
             id_user = User.objects.get(id=self.request.user.id)
             return CalendarUser.objects.filter(iduser=id_user)
+
+
+class ReturnCalendarEventViews(viewsets.ModelViewSet):
+    queryset = CalendarUser.objects.all()
+    serializer_class = ReturnCalendarEventSerializers
+    permission_classes = [permissions.IsAuthenticated]
+
+    def create(self, request):
+
+        if IsAuthenticated:
+
+            id_user = User.objects.get(id=self.request.user.id)
+            serializer = self.get_serializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            date_create_event = request.data['date_create_event']
+            date_mounts = calend_mounth(date_create_event)
+            check_date_event = CalendarUser.objects.filter(date_create_event__range=[date_mounts[0], date_mounts[-1]], iduser=id_user)
+            serializer = CalendarUserSerializers(check_date_event, many=True)
+            a = serializer.data
+            dict_mounts_event = {}
+            for j in date_mounts:
+                for i in a:
+                    if j in i['date_create_event']:
+                        dict_mounts_event.setdefault(j, {}).setdefault(i['event'], i['date_create_event'])
+                    else:
+                        dict_mounts_event.setdefault(j, {})
+            print(dict_mounts_event)
+            return Response({'answer': dict_mounts_event})
+

@@ -171,6 +171,8 @@ class ContactGoogle1(models.Model):
     photo = models.CharField(max_length=250, null=True, blank=True)
     location = ArrayField(models.CharField(max_length=100), blank=True, null=True)
     event_birthday = ArrayField(models.CharField(max_length=80), blank=True, null=True)
+    work = models.CharField(max_length=250, null=True, blank=True)
+    profession = models.CharField(max_length=250, null=True, blank=True)
     created_contact = models.DateTimeField(auto_now_add=True)
     iduser = models.ForeignKey(User, on_delete=models.CASCADE)
 
@@ -199,14 +201,3 @@ class Event(models.Model):
     def __str__(self):
         return self.title_event
 
-
-class Event(models.Model):
-    title_event = models.CharField(max_length=200)
-    description = models.TextField()
-    start_time_event_bd = models.DateTimeField()
-    end_time_event = models.DateTimeField(blank=True, null=True)
-    date_create = models.DateTimeField(auto_now_add=True)
-    id_user = models.ForeignKey(User, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.title_event

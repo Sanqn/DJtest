@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import NewPerson, User, ContactsUser, ContactFaceBook, ContactGoogle1, CalendarUser #Event
+from .models import NewPerson, User, ContactsUser, ContactFaceBook, ContactGoogle1, CalendarUser  # Event
 
 
 class UserAdmin(admin.ModelAdmin):
@@ -18,7 +18,13 @@ admin.site.register(User, UserAdmin)
 admin.site.register(NewPerson)
 admin.site.register(ContactsUser)
 admin.site.register(ContactFaceBook)
-admin.site.register(ContactGoogle1)
+
+
+class ContactGoogle1Admin(admin.ModelAdmin):
+    list_display = ['id', 'first_name', 'last_name', 'email', 'phone']  # показать поля в админке
+
+
+admin.site.register(ContactGoogle1, ContactGoogle1Admin)
 # admin.site.register(CalendarUser)
 
 
