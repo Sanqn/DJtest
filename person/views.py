@@ -103,11 +103,11 @@ class NewQueryView(APIView):
                     print(f"The error '{e}' occurred")
                 return connection
 
-            con = create_connection("DB1", "postgres", "root", "127.0.0.1", "5432")
+            # con = create_connection("DB1", "postgres", "root", "127.0.0.1", "5432")
 
-            # con = create_connection("dc81ggqrnpkve6", "qkaxzsjgiqguhb",
-            #                         "8192f49013a9aa4af326f7b1bb58c32ba4afec96bb149e5e07cbef072591a47e",
-            #                         "ec2-18-204-142-254.compute-1.amazonaws.com", "5432")
+            con = create_connection("dc81ggqrnpkve6", "qkaxzsjgiqguhb",
+                                    "8192f49013a9aa4af326f7b1bb58c32ba4afec96bb149e5e07cbef072591a47e",
+                                    "ec2-18-204-142-254.compute-1.amazonaws.com", "5432")
 
             def check_name_db(connection):
                 cursor = connection.cursor()
