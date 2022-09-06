@@ -1,48 +1,50 @@
-# import psycopg2
-# from psycopg2 import OperationalError
-# from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
+import psycopg2
+from psycopg2 import OperationalError
+from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
+
+a = 'testperson'
+
+
+def create_connection(db_name, db_user, db_password, db_host, db_port):
+    connection = None
+    try:
+        connection = psycopg2.connect(
+            database=db_name,
+            user=db_user,
+            password=db_password,
+            host=db_host,
+            port=db_port,
+        )
+        print('Connection to PosrgresQL DB successfull')
+        cursor = connection.cursor()
+        # print(connection.get_dsn_parameters(), "\n")
+        # Выполнение SQL-запроса
+        cursor.execute(
+            "SELECT table_name FROM information_schema.tables WHERE table_schema NOT IN ('information_schema', 'pg_catalog')")
+        # Получить результатn
+        for x in cursor:
+            print(x, '==========')
+        #Получить результат
+        cursor.execute("DELETE FROM person_contactgoogle1")
+        connection.commit()
+        cursor.execute("SELECT * from person_contactgoogle1")
+        record = cursor.fetchall()
+        for i in record:
+            print("person_contactgoogle1", i)
+
+        # cursor.execute("DROP TABLE person_contactfacebook")
+        # connection.commit()
+        # cursor.execute("DELETE FROM django_content_type WHERE id='18'")
+        # connection.commit()
+
+    except OperationalError as e:
+        print(f"The error '{e}' occurred")
+    return connection
 #
-# a = 'testperson'
 #
-#
-# def create_connection(db_name, db_user, db_password, db_host, db_port):
-#     connection = None
-#     try:
-#         connection = psycopg2.connect(
-#             database=db_name,
-#             user=db_user,
-#             password=db_password,
-#             host=db_host,
-#             port=db_port,
-#         )
-#         print('Connection to PosrgresQL DB successfull')
-#         cursor = connection.cursor()
-#         # print(connection.get_dsn_parameters(), "\n")
-#         # Выполнение SQL-запроса
-#         cursor.execute(
-#             "SELECT table_name FROM information_schema.tables WHERE table_schema NOT IN ('information_schema', 'pg_catalog')")
-#         # Получить результатn
-#         for x in cursor:
-#             print(x)
-#         #Получить результат
-#         # cursor.execute("SELECT * from django_content_type")
-#         # record = cursor.fetchall()
-#         # for i in record:
-#         #     print("django_content_type", i)
-#
-#         # cursor.execute("DROP TABLE person_contactfacebook")
-#         # connection.commit()
-#         # cursor.execute("DELETE FROM django_content_type WHERE id='18'")
-#         # connection.commit()
-#
-#     except OperationalError as e:
-#         print(f"The error '{e}' occurred")
-#     return connection
-# #
-# #
-# # # con = create_connection("DB1", "postgres", "root", "127.0.0.1", "5432")
-# con = create_connection("ddsdcob9bgai0s", "cxykdjoiuitbnk", "3a2732e3887fb34b436a8e23280163338bbb879fe0e4a4371dca48d5eae472e1",
-#                         "ec2-54-152-28-9.compute-1.amazonaws.com", "5432")
+# # con = create_connection("DB1", "postgres", "root", "127.0.0.1", "5432")
+con = create_connection("ddsdcob9bgai0s", "cxykdjoiuitbnk", "3a2732e3887fb34b436a8e23280163338bbb879fe0e4a4371dca48d5eae472e1",
+                        "ec2-54-152-28-9.compute-1.amazonaws.com", "5432")
 #
 #
 # def execute_query_users(connection):
@@ -452,7 +454,7 @@
 # test = 'аааБББввв'
 # pars = r'[А-Я]\w*[А-Я]'
 # print(re.search(pars, test))
-from collections import OrderedDict
-
-a = OrderedDict([('first_name', 'ada253'), ('last_name', 'awdawd333'), ('phone', '+375291500000'), ('email', 'awdagrg3rw4d@gmail.com'), ('photo', None), ('location', None), ('event_birthday', None)])
-print(a['first_name'])
+# from collections import OrderedDict
+#
+# a = OrderedDict([('first_name', 'ada253'), ('last_name', 'awdawd333'), ('phone', '+375291500000'), ('email', 'awdagrg3rw4d@gmail.com'), ('photo', None), ('location', None), ('event_birthday', None)])
+# print(a['first_name'])

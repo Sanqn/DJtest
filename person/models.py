@@ -201,3 +201,33 @@ class Event(models.Model):
     def __str__(self):
         return self.title_event
 
+
+class Student(models.Model):
+    first_name = models.CharField(max_length=100)
+    second_name = models.CharField(max_length=100)
+    code0 = models.CharField(max_length=100, blank=True)
+    code1 = models.CharField(max_length=100, blank=True)
+    code2 = models.CharField(max_length=100, blank=True)
+    code3 = models.CharField(max_length=100, blank=True)
+    code4 = models.CharField(max_length=100, blank=True)
+
+    class Meta:
+        indexes = [models.Index(fields=['code0', ]), ]
+
+    def __str__(self):
+        return self.first_name
+
+class NoStudent(models.Model):
+    first_name = models.CharField(max_length=100)
+    second_name = models.CharField(max_length=100)
+    code0 = models.CharField(max_length=100, blank=True, db_index=True)
+    code1 = models.CharField(max_length=100, blank=True)
+    code2 = models.CharField(max_length=100, blank=True)
+    code3 = models.CharField(max_length=100, blank=True)
+    code4 = models.CharField(max_length=100, blank=True)
+
+    # class Meta:
+    #     indexes = [models.Index(fields=['code0', ]), ]
+
+    def __str__(self):
+        return self.first_name

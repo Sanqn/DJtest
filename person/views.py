@@ -69,7 +69,7 @@ class NewQueryView(APIView):
             serializer.save()
             return Response({'message': 'User created',
                              'user': serializer.data})
-        else:  # если нет в models  моделей, подключаемся к БД напрямую
+        else:  # если нет в models моделей, подключаемся к БД напрямую
             name_field = {}
             name_table = ''
             name_field_for_found = []
@@ -85,7 +85,7 @@ class NewQueryView(APIView):
                         list_fields_names.append(val)  # формируем и добавляем значения ключа
             list_fields_names = tuple(list_fields_names)  # переводим в картеж для отправки в БД
             name_field['date'] = 'timestamp DEFAULT NOW()'
-            now_time = datetime.datetime.now()
+            now_time = datetime.now()
             list_fields_names = list_fields_names + (str(now_time),)
 
             def create_connection(db_name, db_user, db_password, db_host, db_port):  # подключаемся к БД
