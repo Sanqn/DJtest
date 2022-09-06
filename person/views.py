@@ -139,7 +139,7 @@ class NewQueryView(APIView):
 
                         cursor.execute(insert_query_del)
                         connection.commit()
-                        return Response({'message': 'Informations added'})
+                        return Response({'message': 'Informations update'})
                     except OperationalError as e:
                         print(f"The error '{e}' occurred")
                 else:  # если таблицы в БД нет, создаем новую и сразу запалняем ее значениями
