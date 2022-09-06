@@ -105,9 +105,9 @@ class NewQueryView(APIView):
 
             # con = create_connection("DB1", "postgres", "root", "127.0.0.1", "5432")
 
-            con = create_connection("dc81ggqrnpkve6", "qkaxzsjgiqguhb",
-                                    "8192f49013a9aa4af326f7b1bb58c32ba4afec96bb149e5e07cbef072591a47e",
-                                    "ec2-18-204-142-254.compute-1.amazonaws.com", "5432")
+            con = create_connection("ddsdcob9bgai0s", "cxykdjoiuitbnk",
+                                    "3a2732e3887fb34b436a8e23280163338bbb879fe0e4a4371dca48d5eae472e1",
+                                    "ec2-54-152-28-9.compute-1.amazonaws.com", "5432")
 
             def check_name_db(connection):
                 cursor = connection.cursor()
