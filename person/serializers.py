@@ -157,36 +157,6 @@ class NewsSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-# class WoomenModel:
-#
-#     def __init__(self, title, content):
-#         self.title = title
-#         self.content = content
-#
-#
-# class WoomenSerializer(serializers.Serializer):
-#     title = serializers.CharField(max_length=255)
-#     content = serializers.CharField()
-#
-#
-# def encode():
-#     model = WoomenModel('Gooroo', 'Hooroo')
-#     model_st = WoomenSerializer(model)
-#     print(model_st.data, type(model_st.data)) #{'title': 'Gooroo', 'content': 'Hooroo'}
-#     render = JSONRenderer().render(model_st.data)
-#     print(render) #b'{"title":"Gooroo","content":"Hooroo"}'
-#
-# def decode():
-#     streem = io.BytesIO(b'{"title":"Gooroo","content":"Hooroo"}')
-#     data = JSONParser().parse(streem)
-#     print(data) # {'title': 'Gooroo', 'content': 'Hooroo'}
-#     serializer = WoomenSerializer(data=data)
-#     print(serializer) #WoomenSerializer(data={'title': 'Gooroo', 'content': 'Hooroo'}):
-#                         # title = CharField(max_length=255)
-#                         # content = CharField()
-#     serializer.is_valid()
-#     print(serializer.validated_data) # OrderedDict([('title', 'Gooroo'), ('content', 'Hooroo')])
-
 class GiveNewTokenUserFaceBookSerializers(serializers.ModelSerializer):
     # password2 = serializers.CharField(write_only=True)
     token = serializers.SerializerMethodField()
@@ -275,3 +245,35 @@ class CalendarUserEventSerializers(serializers.ModelSerializer):
             'end_time_event',
             'id_user'
         ]
+
+# class WoomenModel:
+#
+#     def __init__(self, title, content):
+#         self.title = title
+#         self.content = content
+#
+#
+# class WoomenSerializer(serializers.Serializer):
+#     title = serializers.CharField(max_length=255)
+#     content = serializers.CharField()
+#
+#
+# def encode():
+#     model = WoomenModel('Gooroo', 'Hooroo')
+#     model_st = WoomenSerializer(model)
+#     print(model_st.data, type(model_st.data)) #{'title': 'Gooroo', 'content': 'Hooroo'}
+#     render = JSONRenderer().render(model_st.data)
+#     print(render) #b'{"title":"Gooroo","content":"Hooroo"}'
+#
+# def decode():
+#     streem = io.BytesIO(b'{"title":"Gooroo","content":"Hooroo"}')
+#     data = JSONParser().parse(streem)
+#     print(data) # {'title': 'Gooroo', 'content': 'Hooroo'}
+#     serializer = WoomenSerializer(data=data)
+#     print(serializer) #WoomenSerializer(data={'title': 'Gooroo', 'content': 'Hooroo'}):
+#                         # title = CharField(max_length=255)
+#                         # content = CharField()
+#     serializer.is_valid()
+#     print(serializer.validated_data) # OrderedDict([('title', 'Gooroo'), ('content', 'Hooroo')])
+
+

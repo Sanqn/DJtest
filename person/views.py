@@ -651,11 +651,15 @@ class ContactGoogleViews(viewsets.ModelViewSet):
             return ContactGoogle1.objects.filter(iduser=id_user)
 
     def create(self, request, *args, **kwargs):
+
         if IsAuthenticated:
             serializer = self.get_serializer(data=request.data, many=True)
             serializer.is_valid()
-            ord_dict_user = serializer.data
-            for i in ord_dict_user:
+            for i in request.data:
+            #     first_name = i['first_name']
+            #     print(first_name)
+            # ord_dict_user = serializer.data
+            # for i in ord_dict_user:
                 first_name = i['first_name']
                 last_name = i['last_name']
                 phone = i['phone']
@@ -682,10 +686,11 @@ class ContactGoogleViews(viewsets.ModelViewSet):
                         'work': work,
                         'profession': profession,
                     }
+                    print(new_user)
                     serializer = self.get_serializer(data=new_user)
                     serializer.is_valid(raise_exception=True)
                     serializer.save()
-            return Response({'answer': serializer.data})
+        return Response({'answer': serializer.data})
 
 
 class ContactUserTestGoogle(generics.ListCreateAPIView):
