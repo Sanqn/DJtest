@@ -2,7 +2,7 @@ import datetime
 import calendar
 
 
-def calend_mounth(date):
+def calend_month(date):
     days = []
     a = datetime.datetime.strptime(date, '%Y-%m-%dT%H:%M')
     month = int(a.strftime("%m"))

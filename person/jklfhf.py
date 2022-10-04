@@ -25,9 +25,9 @@ def create_connection(db_name, db_user, db_password, db_host, db_port):
         for x in cursor:
             print(x, '==========')
         #Получить результат
-        cursor.execute("DELETE FROM person_contactgoogle1")
-        connection.commit()
-        cursor.execute("SELECT * from person_contactgoogle1")
+        # cursor.execute("DELETE FROM person_contactgoogle1")
+        # connection.commit()
+        cursor.execute("SELECT * from test5")
         record = cursor.fetchall()
         for i in record:
             print("person_contactgoogle1", i)

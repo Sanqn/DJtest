@@ -4,7 +4,7 @@ import datetime
 from datetime import datetime, timedelta
 import random
 from rest_framework.decorators import action
-from .calendar1 import calend_mounth
+from .calendar1 import calend_month
 
 import schedule
 from django.contrib.auth import user_logged_in
@@ -791,12 +791,12 @@ class ReturnCalendarEventViews(viewsets.ModelViewSet):
             serializer = self.get_serializer(data=request.data)
             serializer.is_valid(raise_exception=True)
             date_create_event = request.data['date_create_event']
-            date_mounts = calend_mounth(date_create_event)
-            check_date_event = CalendarUser.objects.filter(date_create_event__range=[date_mounts[0], date_mounts[-1]], iduser=id_user)
+            date_month = calend_month(date_create_event)
+            check_date_event = CalendarUser.objects.filter(date_create_event__range=[date_month[0], date_month[-1]], iduser=id_user)
             serializer = CalendarUserSerializers(check_date_event, many=True)
             a = serializer.data
             dict_mounts_event = {}
-            for j in date_mounts:
+            for j in date_month:
                 for i in a:
                     if j in i['date_create_event']:
                         dict_mounts_event.setdefault(j, {}).setdefault(i['event'], i['date_create_event'])
