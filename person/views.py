@@ -184,7 +184,7 @@ class DashboardUserView(viewsets.ModelViewSet):
 class ContactsUsersView(viewsets.ModelViewSet):
     queryset = ContactsUser.objects.all()
     serializer_class = ContactsUserSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.IsAuthenticated]
 
     # authentication_classes = (JWTAuthentication,)
 
@@ -197,7 +197,7 @@ class ContactsUsersView(viewsets.ModelViewSet):
 
 class TagDetailView(generics.ListAPIView):
     serializer_class = ContactsUserSerializer
-    permission_classes = [permissions.AllowAny]
+    # permission_classes = [permissions.AllowAny]
 
     # authentication_classes = (JWTAuthentication,)
 
@@ -654,42 +654,42 @@ class ContactGoogleViews(viewsets.ModelViewSet):
 
         if IsAuthenticated:
             serializer = self.get_serializer(data=request.data, many=True)
-            serializer.is_valid()
-            for i in request.data:
-            #     first_name = i['first_name']
-            #     print(first_name)
-            # ord_dict_user = serializer.data
-            # for i in ord_dict_user:
-                first_name = i['first_name']
-                last_name = i['last_name']
-                phone = i['phone']
-                email = i['email']
-                photo = i['photo']
-                location = i['location']
-                event_birthday = i['event_birthday']
-                work = i['work']
-                profession = i['profession']
+            if serializer.is_valid():
+                for i in request.data:
+                #     first_name = i['first_name']
+                #     print(first_name)
+                # ord_dict_user = serializer.data
+                # for i in ord_dict_user:
+                    first_name = i['first_name']
+                    last_name = i['last_name']
+                    phone = i['phone']
+                    email = i['email']
+                    photo = i['photo']
+                    location = i['location']
+                    event_birthday = i['event_birthday']
+                    work = i['work']
+                    profession = i['profession']
 
-                check_user_event = ContactGoogle1.objects.filter(first_name=first_name, last_name=last_name,
-                                                                 phone=phone, email=email)
-                if check_user_event:
-                    print('This contact exist')
-                else:
-                    new_user = {
-                        'first_name': first_name,
-                        'last_name': last_name,
-                        'phone': phone,
-                        'email': email,
-                        'photo': photo,
-                        'location': location,
-                        'event_birthday': event_birthday,
-                        'work': work,
-                        'profession': profession,
-                    }
-                    print(new_user)
-                    serializer = self.get_serializer(data=new_user)
-                    serializer.is_valid(raise_exception=True)
-                    serializer.save()
+                    check_user_event = ContactGoogle1.objects.filter(first_name=first_name, last_name=last_name,
+                                                                     phone=phone, email=email)
+                    if check_user_event:
+                        print('This contact exist')
+                    else:
+                        new_user = {
+                            'first_name': first_name,
+                            'last_name': last_name,
+                            'phone': phone,
+                            'email': email,
+                            'photo': photo,
+                            'location': location,
+                            'event_birthday': event_birthday,
+                            'work': work,
+                            'profession': profession,
+                        }
+                        print(new_user)
+                        serializer = self.get_serializer(data=new_user)
+                        serializer.is_valid(raise_exception=True)
+                        serializer.save()
         return Response({'answer': serializer.data})
 
 
